@@ -10,7 +10,7 @@ def login():
         email = request.form['email']
 
         # Replace this with actual authentication logic
-        if '@live.concordia.ca' in email:
+        if '@live.concordia.ca' or '@mail.concordia.ca' in email:
             # If login is successful, redirect to the home page
             return redirect(url_for('home'))
         else:
