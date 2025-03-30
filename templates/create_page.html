@@ -134,7 +134,7 @@
                 <i class="fas fa-search text-muted"></i>
             </span>
             <input type="text" class="form-control border-start-0" placeholder="Search with conUverse">
-            <a href="notifications.html" class="btn btn-link text-decoration-none">
+            <a href="notification_page.html" class="btn btn-link text-decoration-none">
                 <i class="fas fa-bell" style="color: #912338;"></i>
             </a>
         </div>
@@ -146,33 +146,31 @@
             <div class="col-md-3 col-lg-2 desktop-nav">
                 <div class="sidebar sticky-top" style="top: 20px">
                     <h5 class="navbar-brand mb-4">
-                        <a href ="about_page.html" class="text-decoration-none" style="color: #912338;">
-                            <i class="fas fa-graduation-cap"></i> conUverse
-                        </a>
+                        <i class="fas fa-graduation-cap"></i> conUverse
                     </h5>
                     <nav class="nav flex-column">
                         <a class="nav-link" href="home_page.html">
-                            <i class="fas fa-home"></i> Home
+                          <i class="fas fa-home"></i> Home
                         </a>
                         <a class="nav-link" href="search_page.html">
-                            <i class="fas fa-search"></i> Search
+                          <i class="fas fa-search"></i> Search
                         </a>
                         <a class="nav-link" href="discover_page.html">
-                            <i class="fas fa-compass"></i> Discover
+                          <i class="fas fa-compass"></i> Discover
                         </a>
                         <a class="nav-link" href="message_page.html">
-                            <i class="fas fa-envelope"></i> Messages
+                          <i class="fas fa-envelope"></i> Messages
                         </a>
                         <a class="nav-link" href="notification_page.html">
-                            <i class="fas fa-bell"></i> Notifications
+                          <i class="fas fa-bell"></i> Notifications
                         </a>
-                        <a class="nav-link active" href="create_page.html">
-                            <i class="fas fa-plus-circle"></i> Create
+                        <a class="nav-link" href="create_page.html">
+                          <i class="fas fa-plus-circle"></i> Create
                         </a>
                         <a class="nav-link" href="profile_page.html">
-                            <i class="fas fa-user"></i> Profile
+                          <i class="fas fa-user"></i> Profile
                         </a>
-                    </nav>
+                      </nav>
                 </div>
             </div>
 
@@ -191,6 +189,12 @@
                         </button>
                         <button class="post-type-btn" data-type="link">
                             <i class="fas fa-link me-2"></i>Link
+                        </button>
+                        <button class="post-type-btn" data-type="event">
+                            <i class="fas fa-calendar me-2"></i>Event
+                        </button>
+                        <button class="post-type-btn" data-type="study-group">
+                            <i class="fas fa-users me-2"></i>Study Group
                         </button>
                     </div>
 
@@ -231,6 +235,57 @@
                             </div>
                             <div class="mb-3 mt-3">
                                 <textarea class="form-control" rows="3" placeholder="Add your thoughts about this link..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Event Post Content (initially hidden) -->
+                        <div class="post-content event-post" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label">Event Date & Time</label>
+                                <input type="datetime-local" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" placeholder="Event location">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Capacity</label>
+                                <input type="number" class="form-control" placeholder="Maximum number of participants">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Event Description</label>
+                                <textarea class="form-control" rows="4" placeholder="Describe your event..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Study Group Post Content (initially hidden) -->
+                        <div class="post-content study-group-post" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label">Course Code</label>
+                                <input type="text" class="form-control" placeholder="e.g., COMP352">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Meeting Schedule</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control mb-2" placeholder="Date">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="time" class="form-control mb-2" placeholder="Time">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Group Size Limit</label>
+                                <input type="number" class="form-control" placeholder="Maximum number of members">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Study Topics</label>
+                                <textarea class="form-control" rows="3" placeholder="List the topics you plan to cover..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Additional Information</label>
+                                <textarea class="form-control" rows="3" placeholder="Any other details about the study group..."></textarea>
                             </div>
                         </div>
 
