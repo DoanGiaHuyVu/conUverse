@@ -1,14 +1,15 @@
 # 🎓conUverse🎓
 
 ## Project Description
-ConUverse is a cutting-edge platform designed to facilitate seamless communication and collaboration. It provides users with an intuitive interface and robust features to connect, share, and work together efficiently.
+ConUverse allows students to interact with their peers, join events and study groups, communicate through messages, and stay informed about important activities on campus. The platform is designed to improve student engagement, reduce isolation, and provide a space for students to thrive academically and socially.
 
 ## Features
-- **Real-time Communication**: Enables instant messaging and live discussions.
-- **Collaboration Tools**: Includes file sharing, task management, and collaborative editing.
-- **User Management**: Supports user authentication, roles, and permissions.
-- **Customizable Interface**: Allows users to personalize their experience.
-- **Cross-Platform Support**: Accessible on web, mobile, and desktop platforms.
+- **Login with Concordia Email**: Seamlessly log in using your Concordia University credentials.
+- **Personalized Profiles**: Students can create a profile displaying their courses, major, and year of study.
+- **Study Groups**: Find and join study groups for various courses.
+- **Events & Workshops**: Stay updated on top campus events and workshops.
+- **Messaging & Notifications**: Communicate with peers and receive notifications about events and messages.
+- **Post Feed**: Share posts, images, and files with friends and classmates, and interact with likes, comments, and shares.
 
 ## Installation
 1. Clone the repository:
@@ -31,7 +32,10 @@ ConUverse is a cutting-edge platform designed to facilitate seamless communicati
 ## Usage
 1. Open your browser and navigate to `http://localhost:3000`.
 2. Create an account or log in with your credentials.
-3. Explore the features such as messaging, file sharing, and task management.
+3. Once logged in, you'll be redirected to the home page where you can explore your profile, study groups, events, and post feeds.
+4. To create a post, enter text, upload an image, or file, and click the Post button.
+5. You can also like, comment, and share posts from other students.
+
 
 ## Technologies Used
 - **Frontend**: React, HTML, Tailwind CSS
