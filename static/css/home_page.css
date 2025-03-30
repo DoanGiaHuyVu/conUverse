@@ -253,3 +253,27 @@
           margin-bottom: 70px; /* Space for mobile nav */
         }
       }
+
+
+      .nav-link {
+        color: #6c757d;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .nav-link:hover {
+        color: #912338;
+    }
+    
+    .nav-link.active {
+        color: #912338;
+        font-weight: 500;
+    }
+    
+    .nav-link i {
+        width: 1.25rem;
+    }
