@@ -88,7 +88,7 @@
         margin-bottom: 0.5rem;
       }
 
-      .filter-tag {
+      /*.filter-tag {
         background-color: #f0f2f5;
         padding: 0.5rem 1rem;
         border-radius: 20px;
@@ -102,17 +102,45 @@
       .filter-tag.active {
         background-color: #912338;
         color: white;
+      }*/
+
+
+      .filter-tag {
+        display: inline-block;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+        margin-right: 0.5rem;
       }
+
+      .filter-tag {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        background-color: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid #dee2e6;
+      }
+
+      .filter-tag:hover,
+      .filter-tag.active {
+        background-color: #912338;
+        color: white;
+      }
+
 
       .trending-search {
         padding: 0.75rem;
         border-radius: 8px;
         transition: background-color 0.2s;
         cursor: pointer;
+        background-color: white;
+        margin-bottom: 8px;
       }
 
       .trending-search:hover {
-        background-color: #f0f2f5;
+        background-color: #912338;
+        color: white;
       }
 
       .trending-number {
