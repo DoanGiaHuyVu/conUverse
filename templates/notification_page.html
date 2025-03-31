@@ -20,12 +20,54 @@
       .notification-controls .form-select,
       .notification-controls .btn {
         height: 38px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+      .notification-controls .input-group {
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
       .notification-controls .input-group .btn {
         border-left: 0;
+        background-color: white;
       }
       .notification-controls .input-group .form-control {
         border-right: 0;
+        box-shadow: none;
+      }
+      .notification-controls .input-group .form-control:focus,
+      .notification-controls .form-select:focus,
+      .notification-controls .btn:focus {
+        box-shadow: 0 0 0 0.2rem rgba(145, 35, 56, 0.25);
+        border-color: #912338;
+      }
+      .notification-controls .btn {
+        border: 1px solid #dee2e6;
+        color: #495057;
+        background-color: white;
+      }
+      .notification-controls .btn:hover {
+        background-color: #f8f9fa;
+        border-color: #912338;
+        color: #912338;
+      }
+      .notification-controls .form-select {
+        border: 1px solid #dee2e6;
+        cursor: pointer;
+      }
+      .notification-controls .form-select:hover {
+        border-color: #912338;
+      }
+      .notification-controls .dropdown-menu {
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      }
+      .notification-controls .dropdown-item:hover {
+        background-color: #f8f9fa;
+      }
+      .notification-controls .form-check-input:checked {
+        background-color: #912338;
+        border-color: #912338;
       }
     </style>
     </head>
@@ -112,7 +154,7 @@
               </div>
               
               <!-- Archive Button -->
-              <div class="col-md-2">
+              <div class="col-md-2" style="width: auto;">
                 <button class="btn btn-outline-secondary w-100">
                   <i class="fas fa-archive"></i> Archive
                 </button>
