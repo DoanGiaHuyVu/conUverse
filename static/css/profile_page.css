@@ -9,7 +9,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -421,7 +421,6 @@ body {
 
   .content-area {
     margin-bottom: 70px; /* Space for mobile nav */
-    border-radius: 30px;
   }
 
   .profile-header {
