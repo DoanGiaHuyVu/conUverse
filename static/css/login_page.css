@@ -1,86 +1,86 @@
 /* Reset Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 /* Centering the Login Container */
 body {
-    background: #912338;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: #912338;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Login Box */
 .login-container {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 350px;
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 350px;
 }
 
 /* Title */
 .login-container h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #2c3e50;
 }
 
 /* Subtitle */
 .subtitle {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
 }
 
 /* Form Inputs */
 label {
-    display: block;
-    text-align: left;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333;
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /* Login Button */
 .login-btn {
-    width: 100%;
-    background: #912338;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 100%;
+  background: #912338;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .login-btn:hover {
-    background: #510815;
+  background: #510815;
 }
 
 /* Forgot Password */
 .forgot-password {
-    display: block;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #912338;
-    text-decoration: none;
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #912338;
+  text-decoration: none;
 }
 
 .forgot-password:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
