@@ -1,0 +1,12 @@
+from app import create_app, db
+from app.models import User, Post, Comment, Like, Follower
+
+app = create_app()
+
+# Create application context explicitly
+with app.app_context():
+    db.create_all()  # This will create the database file and tables
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    
