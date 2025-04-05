@@ -1,71 +1,92 @@
-from app import mysql
+from datetime import datetime
+from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
-def init_db():
-    """Initialize database tables"""
-    cur = mysql.connection.cursor()
+class User(db.Model):
+    """User model for authentication and user details"""
+    __tablename__ = 'users'
     
-    # Users table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) UNIQUE NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(128) NOT NULL,
-        name VARCHAR(100),
-        bio TEXT,
-        profile_pic VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(100))
+    bio = db.Column(db.Text)
+    profile_pic = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='user', lazy=True)
+    likes = db.relationship('Like', backref='user', lazy=True)
+    
+    # Following/followers relationship (self-referential)
+    following = db.relationship(
+        'User', secondary='followers',
+        primaryjoin='Follower.follower_id == User.id',
+        secondaryjoin='Follower.followed_id == User.id',
+        backref='followers'
     )
-    """)
     
-    # Posts table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS posts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        content TEXT NOT NULL,
-        image_url VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    )
-    """)
+    def set_password(self, password):
+        """Create hashed password"""
+        self.password_hash = generate_password_hash(password)
     
-    # Followers table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS followers (
-        follower_id INT NOT NULL,
-        followed_id INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (follower_id, followed_id),
-        FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (followed_id) REFERENCES users(id) ON DELETE CASCADE
-    )
-    """)
+    def check_password(self, password):
+        """Check hashed password"""
+        return check_password_hash(self.password_hash, password)
     
-    # Likes table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS likes (
-        user_id INT NOT NULL,
-        post_id INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (user_id, post_id),
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-    )
-    """)
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+class Post(db.Model):
+    """Post model for user content"""
+    __tablename__ = 'posts'
     
-    # Comments table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS comments (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        post_id INT NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-    )
-    """)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    mysql.connection.commit()
-    cur.close()
+    # Relationships
+    comments = db.relationship('Comment', backref='post', lazy=True, cascade='all, delete-orphan')
+    likes = db.relationship('Like', backref='post', lazy=True, cascade='all, delete-orphan')
+    
+    def __repr__(self):
+        return f'<Post {self.id} by {self.user_id}>'
+
+class Follower(db.Model):
+    """Association table for followers/following relationship"""
+    __tablename__ = 'followers'
+    
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Follower {self.follower_id} follows {self.followed_id}>'
+
+class Like(db.Model):
+    """Like model for post likes"""
+    __tablename__ = 'likes'
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Like user:{self.user_id} post:{self.post_id}>'
+
+class Comment(db.Model):
+    """Comment model for post comments"""
+    __tablename__ = 'comments'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Comment {self.id} by {self.user_id}>'
