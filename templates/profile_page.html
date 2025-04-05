@@ -1,296 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - conUverse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/profile_page.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-    <!-- Mobile Search Bar (visible on small screens) -->
-    <div class="mobile-search">
-      <div class="input-group">
-        <span class="input-group-text bg-white border-end-0">
-          <i class="fas fa-search text-muted"></i>
-        </span>
-        <input
-          type="text"
-          class="form-control border-start-0"
-          placeholder="Search with conUverse"
-        />
-        <a href="notifications.html" class="btn btn-link text-decoration-none">
-          <i class="fas fa-bell" style="color: #912338;"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="container-fluid py-4">
-      <div class="row">
-        <!-- Left Navigation Sidebar (hidden on mobile) -->
-        <div class="col-md-3 col-lg-2 desktop-nav">
-          <div class="sidebar sticky-top" style="top: 20px">
-            <h5 class="navbar-brand mb-4">
-                <a href ="about_page.html" class="text-decoration-none" style="color: #912338;">
-                    <i class="fas fa-graduation-cap"></i> conUverse
-                  </a>
-            </h5>
-            <nav class="nav flex-column">
-              <a class="nav-link" href="home_page.html".html">
-                <i class="fas fa-home"></i> Home
-              </a>
-              <a class="nav-link" href="search_page.html">
-                <i class="fas fa-search"></i> Search
-              </a>
-              <a class="nav-link" href="discover_page.html">
-                <i class="fas fa-compass"></i> Discover
-              </a>
-              <a class="nav-link" href="message_page.html">
-                <i class="fas fa-envelope"></i> Messages
-              </a>
-              <a class="nav-link" href="notification_page.html">
-                <i class="fas fa-bell"></i> Notifications
-              </a>
-              <a class="nav-link" href="create_page.html">
-                <i class="fas fa-plus-circle"></i> Create
-              </a>
-              <a class="nav-link active" href="profile_page.html">
-                <i class="fas fa-user"></i> Profile
-              </a>
-            </nav>
-          </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile - conUverse</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/static/css/profile_page.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>  
+        <!-- Mobile Search Bar (visible on small screens) -->
+        <div class="mobile-search">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+            </span>
+            <input
+            type="text"
+            class="form-control border-start-0"
+            placeholder="Search with conUverse"
+            />
+            <a href="notifications.html" class="btn btn-link text-decoration-none">
+            <i class="fas fa-bell" style="color: #912338;"></i>
+            </a>
         </div>
-
-        <!-- Main Content Area -->
-        <div class="col-md-6 col-lg-7 content-area">
-          <div class="profile-container">
-            <div class="profile-header">
-              <div class="profile-picture-container">
-                <img src="https://us.images.westend61.de/0001411501pw/portrait-of-confident-young-male-student-in-corridor-of-university-MASF19101.jpg" alt="Profile Picture" class="profile-avatar">
-              </div>
-              <div class="profile-info">
-                <div class="profile-top-row">
-                  <h2 class="profile-username">christ_miracle</h2>
-                  <div class="profile-actions">
-                    <button class="edit-profile-btn">Edit Profile</button>
-                    <a href="setting_page.html" class="settings-link"><i class="fas fa-cog"></i></a>
-                  </div>
-                </div>
-                <div class="profile-stats">
-                  <div class="stat-item">
-                    <span class="stat-count">42</span>
-                    <span class="stat-label">posts</span>
-                  </div>
-                  <div class="stat-item">
-                    <span class="stat-count">125</span>
-                    <span class="stat-label">friends</span>
-                  </div>
-                  <div class="stat-item">
-                    <span class="stat-count">98</span>
-                    <span class="stat-label">following</span>
-                  </div>
-                </div>
-                <div class="profile-bio">
-                  <h1 class="profile-name">Christ Miracle</h1>
-                  <div class="profile-details">
-                    <p>Computer Science | 3rd Year</p>
-                    <p>Concordia University</p>
-                    <p>Passionate about coding and design. Always learning something new! 🚀</p>
-                  </div>
-                </div>
-              </div>
+        </div>
+        <div class="container-fluid py-4">
+        <div class="row">
+            <!-- Left Navigation Sidebar (hidden on mobile) -->
+            <div class="col-md-3 col-lg-2 desktop-nav">
+            <div class="sidebar sticky-top" style="top: 20px">
+                <h5 class="navbar-brand mb-4">
+                    <a href ="about_page.html" class="text-decoration-none" style="color: #912338;">
+                        <i class="fas fa-graduation-cap"></i> conUverse
+                    </a>
+                </h5>
+                <nav class="nav flex-column">
+                <a class="nav-link" href="home_page.html".html">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="nav-link" href="search_page.html">
+                    <i class="fas fa-search"></i> Search
+                </a>
+                <a class="nav-link" href="discover_page.html">
+                    <i class="fas fa-compass"></i> Discover
+                </a>
+                <a class="nav-link" href="message_page.html">
+                    <i class="fas fa-envelope"></i> Messages
+                </a>
+                <a class="nav-link" href="notification_page.html">
+                    <i class="fas fa-bell"></i> Notifications
+                </a>
+                <a class="nav-link" href="create_page.html">
+                    <i class="fas fa-plus-circle"></i> Create
+                </a>
+                <a class="nav-link active" href="profile_page.html">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                </nav>
+            </div>
             </div>
 
-        <!-- Profile Tabs Navigation -->
-        <div class="profile-tabs">
-            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="photos-tab" data-bs-toggle="tab" data-bs-target="#photos" type="button" role="tab" aria-controls="photos" aria-selected="true">
-                        <i class="fas fa-th"></i> Photos
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">
-                        <i class="fas fa-book"></i> Courses
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab" aria-controls="events" aria-selected="false">
-                        <i class="fas fa-calendar"></i> Saved Events
-                    </button>
-                </li>
-            </ul>
+            <!-- Main Content Area -->
+            <div class="col-md-6 col-lg-6 content-area">
+            <div class="profile-container">
+                <div class="profile-header">
+                <div class="profile-picture-container">
+                    <img src="https://us.images.westend61.de/0001411501pw/portrait-of-confident-young-male-student-in-corridor-of-university-MASF19101.jpg" alt="Profile Picture" class="profile-avatar">
+                </div>
+                <div class="profile-info">
+                    <div class="profile-top-row">
+                    <h2 class="profile-username">christ_miracle</h2>
+                    <div class="profile-actions">
+                        <button class="edit-profile-btn">Edit Profile</button>
+                        <a href="setting_page.html" class="settings-link"><i class="fas fa-cog"></i></a>
+                    </div>
+                    </div>
+                    <div class="mobile-edit-container">
+                        <button class="edit-profile-btn">Edit Profile</button>
+                    </div>
+                    <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-count">42</span>
+                        <span class="stat-label">posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-count">125</span>
+                        <span class="stat-label">friends</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-count">98</span>
+                        <span class="stat-label">following</span>
+                    </div>
+                    </div>
+                    <div class="profile-bio">
+                    <h1 class="profile-name">Christ Miracle</h1>
+                    <div class="profile-details">
+                        <p>Computer Science | 3rd Year</p>
+                        <p>Concordia University</p>
+                        <p>Passionate about coding and design. Always learning something new! 🚀</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
 
-            <!-- Tab Content -->
-            <div class="tab-content" id="profileTabsContent">
-                <!-- Photos Tab -->
-                <div class="tab-pane fade show active" id="photos" role="tabpanel" aria-labelledby="photos-tab">
-                    <div class="photos-grid">
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 42</span>
-                                    <span><i class="fas fa-comment"></i> 5</span>
-                                    <span><i class="fas fa-share"></i> 2</span>
+            <!-- Profile Tabs Navigation -->
+            <div class="profile-tabs">
+                <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="photos-tab" data-bs-toggle="tab" data-bs-target="#photos" type="button" role="tab" aria-controls="photos" aria-selected="true">
+                            <i class="fas fa-th"></i> Photos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">
+                            <i class="fas fa-book"></i> Courses
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab" aria-controls="events" aria-selected="false">
+                            <i class="fas fa-calendar"></i> Saved Events
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="profileTabsContent">
+                    <!-- Photos Tab -->
+                    <div class="tab-pane fade show active" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                        <div class="photos-grid">
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 42</span>
+                                        <span><i class="fas fa-comment"></i> 5</span>
+                                        <span><i class="fas fa-share"></i> 2</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 28</span>
-                                    <span><i class="fas fa-comment"></i> 3</span>
-                                    <span><i class="fas fa-share"></i> 1</span>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 28</span>
+                                        <span><i class="fas fa-comment"></i> 3</span>
+                                        <span><i class="fas fa-share"></i> 1</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 56</span>
-                                    <span><i class="fas fa-comment"></i> 8</span>
-                                    <span><i class="fas fa-share"></i> 4</span>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 56</span>
+                                        <span><i class="fas fa-comment"></i> 8</span>
+                                        <span><i class="fas fa-share"></i> 4</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 19</span>
-                                    <span><i class="fas fa-comment"></i> 2</span>
-                                    <span><i class="fas fa-share"></i> 0</span>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 19</span>
+                                        <span><i class="fas fa-comment"></i> 2</span>
+                                        <span><i class="fas fa-share"></i> 0</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 33</span>
-                                    <span><i class="fas fa-comment"></i> 4</span>
-                                    <span><i class="fas fa-share"></i> 1</span>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 33</span>
+                                        <span><i class="fas fa-comment"></i> 4</span>
+                                        <span><i class="fas fa-share"></i> 1</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="photo-item">
-                            <img src="https://via.placeholder.com/300" alt="Posted photo">
-                            <div class="photo-overlay">
-                                <div class="engagement-stats">
-                                    <span><i class="fas fa-heart"></i> 47</span>
-                                    <span><i class="fas fa-comment"></i> 6</span>
-                                    <span><i class="fas fa-share"></i> 3</span>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 47</span>
+                                        <span><i class="fas fa-comment"></i> 6</span>
+                                        <span><i class="fas fa-share"></i> 3</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Courses Tab -->
-                <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
-                    <div class="courses-section">
-                        <h3 class="section-subtitle">Current Courses</h3>
-                        <div class="courses-grid">
-                            <div class="course-item">COMP 233</div>
-                            <div class="course-item">COMP 248</div>
-                            <div class="course-item">COMP 352</div>
-                            <div class="course-item">SOEN 287</div>
-                            <div class="course-item">ENCS 282</div>
-                        </div>
-                        
-                        <h3 class="section-subtitle mt-4">Past Courses</h3>
-                        <div class="courses-grid">
-                            <div class="course-item past-course">COMP 232</div>
-                            <div class="course-item past-course">COMP 249</div>
-                            <div class="course-item past-course">MATH 203</div>
-                            <div class="course-item past-course">MATH 204</div>
-                            <div class="course-item past-course">MATH 205</div>
-                            <div class="course-item past-course">ENCS 272</div>
+                    <!-- Courses Tab -->
+                    <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                        <div class="courses-section">
+                            <h3 class="section-subtitle">Current Courses</h3>
+                            <div class="courses-grid">
+                                <div class="course-item">COMP 233</div>
+                                <div class="course-item">COMP 248</div>
+                                <div class="course-item">COMP 352</div>
+                                <div class="course-item">SOEN 287</div>
+                                <div class="course-item">ENCS 282</div>
+                            </div>
+                            
+                            <h3 class="section-subtitle mt-4">Past Courses</h3>
+                            <div class="courses-grid">
+                                <div class="course-item past-course">COMP 232</div>
+                                <div class="course-item past-course">COMP 249</div>
+                                <div class="course-item past-course">MATH 203</div>
+                                <div class="course-item past-course">MATH 204</div>
+                                <div class="course-item past-course">MATH 205</div>
+                                <div class="course-item past-course">ENCS 272</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Saved Events Tab -->
-                <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
-                    <div class="events-list">
-                        <div class="event-item">
-                            <div class="event-date">
-                                <div class="event-month">MAR</div>
-                                <div class="event-day">15</div>
+                    <!-- Saved Events Tab -->
+                    <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">MAR</div>
+                                    <div class="event-day">15</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Computer Science Society Meetup</h3>
+                                    <p>Hall Building, H-110 @ 5:30 PM</p>
+                                </div>
                             </div>
-                            <div class="event-info">
-                                <h3>Computer Science Society Meetup</h3>
-                                <p>Hall Building, H-110 @ 5:30 PM</p>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">MAR</div>
+                                    <div class="event-day">20</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Hackathon 2024</h3>
+                                    <p>EV Building @ 9:00 AM</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="event-item">
-                            <div class="event-date">
-                                <div class="event-month">MAR</div>
-                                <div class="event-day">20</div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">APR</div>
+                                    <div class="event-day">05</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Career Fair</h3>
+                                    <p>John Molson Building @ 10:00 AM</p>
+                                </div>
                             </div>
-                            <div class="event-info">
-                                <h3>Hackathon 2024</h3>
-                                <p>EV Building @ 9:00 AM</p>
-                            </div>
-                        </div>
-                        <div class="event-item">
-                            <div class="event-date">
-                                <div class="event-month">APR</div>
-                                <div class="event-day">05</div>
-                            </div>
-                            <div class="event-info">
-                                <h3>Career Fair</h3>
-                                <p>John Molson Building @ 10:00 AM</p>
-                            </div>
-                        </div>
-                        <div class="event-item">
-                            <div class="event-date">
-                                <div class="event-month">APR</div>
-                                <div class="event-day">12</div>
-                            </div>
-                            <div class="event-info">
-                                <h3>AI Workshop</h3>
-                                <p>EV Building, EV3.309 @ 2:00 PM</p>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">APR</div>
+                                    <div class="event-day">12</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>AI Workshop</h3>
+                                    <p>EV Building, EV3.309 @ 2:00 PM</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    <!-- Create Button -->
-    <div class="create-btn d-md-none">
-        <i class="fas fa-plus"></i>
-      </div>
-  
-      <!-- Mobile Navigation (visible on small screens) -->
-      <div class="mobile-nav">
-        <a href="home_page.html" class="mobile-nav-item active">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-        <a href="discover_page.html" class="mobile-nav-item">
-          <i class="fas fa-compass"></i>
-          <span>Discover</span>
-        </a>
-        <a href="create_page.html" class="mobile-nav-item">
-          <i class="fas fa-plus-circle"></i>
-          <span>Create</span>
-        </a>
-        <a href="message_page.html" class="mobile-nav-item">
-          <i class="fas fa-envelope"></i>
-          <span>Messages</span>
-        </a>
-        <a href="profile_page.html" class="mobile-nav-item">
-          <i class="fas fa-user"></i>
-          <span>Profile</span>
-        </a>
-      </div>
-</body>
+        <!-- Create Button -->
+        <div class="create-btn d-md-none">
+            <i class="fas fa-plus"></i>
+        </div>
+    
+        <!-- Mobile Navigation (visible on small screens) -->
+        <div class="mobile-nav">
+            <a href="home_page.html" class="mobile-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+            </a>
+            <a href="discover_page.html" class="mobile-nav-item">
+            <i class="fas fa-compass"></i>
+            <span>Discover</span>
+            </a>
+            <a href="create_page.html" class="mobile-nav-item">
+            <i class="fas fa-plus-circle"></i>
+            <span>Create</span>
+            </a>
+            <a href="message_page.html" class="mobile-nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+            </a>
+            <a href="profile_page.html" class="mobile-nav-item active">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+            </a>
+        </div>
+        </div>
+    </body>
 </html>
