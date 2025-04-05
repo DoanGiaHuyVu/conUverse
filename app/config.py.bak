@@ -1,12 +1,10 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY') or 'your-secret-key-here'
-    MYSQL_HOST = os.getenv('MYSQL_HOST')
-    MYSQL_USER = os.getenv('MYSQL_USER')
-    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
-    MYSQL_DB = os.getenv('MYSQL_DB')
-    MYSQL_CURSORCLASS = 'DictCursor'
+    # SQLite configuration
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///social_media.db'  # Creates a file `social_media.db`
+    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disables modification tracking (lowers overhead)
