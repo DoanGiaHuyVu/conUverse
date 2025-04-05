@@ -9,6 +9,7 @@
 
 /* General Styles */
 body {
+  font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: var(--light-bg);
   color: #333;
   padding-bottom: 70px; /* Space for mobile nav */
@@ -142,10 +143,15 @@ body {
 /* Navigation Styles */
 .sidebar {
   background-color: white;
-  border-radius: 30px;
+  border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: var(--concordia-maroon) !important;
 }
 
 .nav-link {
@@ -156,6 +162,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 500;
 }
 
 .nav-link:hover {
@@ -164,11 +171,11 @@ body {
 
 .nav-link.active {
   color: var(--concordia-maroon);
-  font-weight: 500;
 }
 
 .nav-link i {
-  width: 1.25rem;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
 }
 
 /* Mobile Styles */
