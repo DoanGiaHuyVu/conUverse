@@ -1,0 +1,16 @@
+from . import db
+from .models import User, Post
+
+def init_test_data():
+    if not User.query.first():
+        # Create test user
+        user = User(username='testuser')
+        db.session.add(user)
+        
+        # Create test posts
+        posts = [
+            Post(content="First test post", author=user),
+            Post(content="Second test post", author=user)
+        ]
+        db.session.add_all(posts)
+        db.session.commit()
