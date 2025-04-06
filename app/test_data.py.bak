@@ -1,0 +1,57 @@
+from faker import Faker
+from . import db
+from .models import User, Post
+from werkzeug.security import generate_password_hash
+import random
+from datetime import datetime
+
+fake = Faker()
+
+def init_test_data():
+    print("\n🔍 Initializing test data...")
+    
+    # Only proceed if database is empty
+    if not User.query.first():
+        print("⚙️ Creating test users...")
+        users = []
+        for _ in range(5):  # Create 5 test users
+            user = User(
+                public_id=fake.uuid4(),
+                email=fake.unique.email(),
+                username=fake.unique.user_name(),
+                password_hash=generate_password_hash('test123'),  # Standard test password
+                name=fake.name(),
+                created_at=datetime.utcnow()
+            )
+            users.append(user)
+            db.session.add(user)
+        
+        db.session.commit()
+        print(f"✅ Created {len(users)} test users")
+        
+        print("⚙️ Creating test posts...")
+        posts = []
+        for user in users:
+            # Each user gets 2-5 posts
+            for _ in range(random.randint(2, 5)):
+                post = Post(
+                    content=fake.sentence(nb_words=random.randint(5, 20)),
+                    author=user,
+                    created_at=datetime.utcnow()
+                )
+                posts.append(post)
+                db.session.add(post)
+        
+        db.session.commit()
+        print(f"✅ Created {len(posts)} test posts")
+        
+    else:
+        print("✅ Database already contains data")
+    
+    # Print summary statistics
+    print("\n📊 Database Summary:")
+    print(f"Users: {User.query.count()}")
+    print(f"Posts: {Post.query.count()}")
+    print("Sample users:")
+    for user in User.query.limit(3).all():
+        print(f"- {user.username} (Posts: {len(user.posts)})")
