@@ -1,103 +1,129 @@
-from flask import Blueprint, request, jsonify
-from app import mysql
-import MySQLdb
+from flask import jsonify, request, make_response
+from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
+from .models import User, Post
+import uuid
+import datetime
+from functools import wraps
 
-main = Blueprint('main', __name__)
-
-@main.route('/')
-def home():
-    return "Social Media Backend API"
-
-# User routes
-@main.route('/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute(
-            "INSERT INTO users (username, email, password_hash, name) VALUES (%s, %s, %s, %s)",
-            (data['username'], data['email'], data['password'], data.get('name', ''))
+def init_routes(app):
+    # ========================
+    # Authentication Routes
+    # ========================
+    
+    @app.route('/register', methods=['POST'])
+    def register():
+        data = request.get_json()
+        if User.query.filter_by(email=data['email']).first():
+            return jsonify({'success': False, 'error': 'Email already exists'}), 400
+            
+        user = User(
+            email=data['email'],
+            username=data['username'],
+            password=data['password']  # In production, you should hash this
         )
-        mysql.connection.commit()
-        user_id = cur.lastrowid
-        cur.close()
-        return jsonify({'message': 'User created', 'user_id': user_id}), 201
-    except MySQLdb.IntegrityError as e:
-        return jsonify({'error': 'Username or email already exists'}), 400
+        db.session.add(user)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'user_id': user.id,
+            'username': user.username
+        })
 
-@main.route('/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
-    user = cur.fetchone()
-    cur.close()
-    if user:
-        return jsonify(user)
-    return jsonify({'error': 'User not found'}), 404
+    @app.route('/login', methods=['POST'])
+    def login():
+        data = request.get_json()
+        user = User.query.filter_by(
+            email=data['email'],
+            password=data['password']  # Plaintext comparison for prototype
+        ).first()
+        
+        if user:
+            return jsonify({
+                'success': True,
+                'user_id': user.id,
+                'username': user.username
+            })
+    return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
 
-# Post routes
-@main.route('/posts', methods=['POST'])
-def create_post():
-    data = request.get_json()
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute(
-            "INSERT INTO posts (user_id, content, image_url) VALUES (%s, %s, %s)",
-            (data['user_id'], data['content'], data.get('image_url', None))
-        )
-        mysql.connection.commit()
-        post_id = cur.lastrowid
-        cur.close()
-        return jsonify({'message': 'Post created', 'post_id': post_id}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    # ========================
+    # User Routes
+    # ========================
+    
+    @app.route('/users', methods=['GET'])
+    def get_all_users():
+        users = User.query.all()
+        return jsonify([{
+            'public_id': user.public_id,
+            'username': user.username,
+            'email': user.email,
+            'name': user.name
+        } for user in users])
 
-@main.route('/posts/<int:post_id>', methods=['GET'])
-def get_post(post_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM posts WHERE id = %s", (post_id,))
-    post = cur.fetchone()
-    cur.close()
-    if post:
-        return jsonify(post)
-    return jsonify({'error': 'Post not found'}), 404
+    @app.route('/users/<public_id>', methods=['GET'])
+    def get_one_user(public_id):
+        user = User.query.filter_by(public_id=public_id).first()
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+            
+        return jsonify({
+            'public_id': user.public_id,
+            'username': user.username,
+            'email': user.email,
+            'name': user.name,
+            'posts_count': len(user.posts)
+        })
 
-@main.route('/posts/user/<int:user_id>', methods=['GET'])
-def get_user_posts(user_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM posts WHERE user_id = %s ORDER BY created_at DESC", (user_id,))
-    posts = cur.fetchall()
-    cur.close()
-    return jsonify(posts)
+    # ========================
+    # Post Routes (Updated)
+    # ========================
+    
+    @app.route('/posts', methods=['GET'])
+    def get_posts():
+        posts = Post.query.order_by(Post.created_at.desc()).all()
+        return jsonify([{
+            'id': p.id,
+            'content': p.content,
+            'author': {
+                'username': p.author.username,
+                'id': p.author.id
+            },
+            'created_at': p.created_at.isoformat()
+        } for p in posts])
 
-# Follow routes
-@main.route('/follow', methods=['POST'])
-def follow_user():
-    data = request.get_json()
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute(
-            "INSERT INTO followers (follower_id, followed_id) VALUES (%s, %s)",
-            (data['follower_id'], data['followed_id'])
-        )
-        mysql.connection.commit()
-        cur.close()
-        return jsonify({'message': 'Followed successfully'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    @app.route('/posts', methods=['POST'])
+    def add_post():
+        data = request.get_json()
+        user = User.query.get(data['user_id'])
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+            
+        post = Post(content=data['content'], author=user)
+        db.session.add(post)
+        db.session.commit()
+        
+        return jsonify({'id': post.id}), 201
 
-# Like routes
-@main.route('/like', methods=['POST'])
-def like_post():
-    data = request.get_json()
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute(
-            "INSERT INTO likes (user_id, post_id) VALUES (%s, %s)",
-            (data['user_id'], data['post_id'])
-        )
-        mysql.connection.commit()
-        cur.close()
-        return jsonify({'message': 'Post liked'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    # ========================
+    # Root Route
+    # ========================
+    
+    @app.route('/')
+    def home():
+        return app.send_static_file('index.html')
+
+    # Helper function for token verification
+    def verify_token(token):
+        if not token:
+            return None
+            
+        try:
+            # Extract token from "Bearer <token>"
+            token = token.split(' ')[1]
+            public_id = User.decode_token(token)  # Implement this in User model
+            return User.query.filter_by(public_id=public_id).first()
+        except:
+            return None

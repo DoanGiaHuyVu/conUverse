@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Prototype</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .auth-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .post-author {
+            font-weight: bold;
+        }
+        .post-time {
+            color: #666;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        button {
+            padding: 10px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        #user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Prototype</h1>
+    
+    <!-- Authentication Section -->
+    <div id="auth-section" class="auth-section">
+        <h2>Login or Register</h2>
+        <div>
+            <input type="email" id="auth-email" placeholder="Email">
+            <input type="password" id="auth-password" placeholder="Password">
+            <input type="text" id="auth-username" placeholder="Username (for register)" class="hidden">
+            <button id="login-btn" onclick="handleLogin()">Login</button>
+            <button id="register-btn" class="secondary" onclick="toggleAuthMode()">Register Instead</button>
+            <div id="auth-error" class="error"></div>
+        </div>
+    </div>
+    
+    <!-- User Info Section (shown when logged in) -->
+    <div id="user-section" class="hidden">
+        <div id="user-info">
+            <div id="user-avatar"></div>
+            <div>
+                <h2 id="user-name"></h2>
+                <button onclick="handleLogout()" class="secondary">Logout</button>
+            </div>
+        </div>
+        
+        <!-- Post Creation -->
+        <textarea id="new-post" placeholder="What's on your mind?"></textarea>
+        <button onclick="addPost()">Post</button>
+        
+        <!-- Posts Feed -->
+        <div id="posts-container"></div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const authSection = document.getElementById('auth-section');
+        const userSection = document.getElementById('user-section');
+        const authError = document.getElementById('auth-error');
+        const registerBtn = document.getElementById('register-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const usernameInput = document.getElementById('auth-username');
+        let isRegisterMode = false;
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('token')) {
+            checkAuth();
+        }
+        
+        // Toggle between login/register forms
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            
+            if (isRegisterMode) {
+                loginBtn.textContent = 'Register';
+                registerBtn.textContent = 'Login Instead';
+                usernameInput.classList.remove('hidden');
+            } else {
+                loginBtn.textContent = 'Login';
+                registerBtn.textContent = 'Register Instead';
+                usernameInput.classList.add('hidden');
+            }
+            
+            authError.textContent = '';
+        }
+        
+        // Handle login/registration
+        async function handleLogin() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const username = isRegisterMode ? document.getElementById('auth-username').value : null;
+            
+            try {
+                let response;
+                
+                if (isRegisterMode) {
+                    response = await fetch('/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password, username })
+                    });
+                } else {
+                    response = await fetch('/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                }
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                        checkAuth();
+                    }
+                } else {
+                    authError.textContent = data.error || 'Authentication failed';
+                }
+            } catch (error) {
+                authError.textContent = 'Network error';
+                console.error('Auth error:', error);
+            }
+        }
+        
+        // Verify token and load user data
+        async function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            try {
+                const response = await fetch('/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    showUserSection(user);
+                    loadPosts();
+                } else {
+                    localStorage.removeItem('token');
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+            }
+        }
+        
+        // Show authenticated UI
+        function showUserSection(user) {
+            authSection.classList.add('hidden');
+            userSection.classList.remove('hidden');
+            
+            document.getElementById('user-name').textContent = user.username;
+            document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem('token');
+            userSection.classList.add('hidden');
+            authSection.classList.remove('hidden');
+            document.getElementById('posts-container').innerHTML = '';
+        }
+        
+        // Fetch and display posts
+        async function loadPosts() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch('/posts', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const posts = await response.json();
+                    const container = document.getElementById('posts-container');
+                    
+                    container.innerHTML = posts.map(post => `
+                        <div class="post">
+                            <div class="post-header">
+                                <div class="post-avatar">${post.author.username.charAt(0).toUpperCase()}</div>
+                                <div>
+                                    <span class="post-author">${post.author.username}</span>
+                                    <span class="post-time">${new Date(post.created_at).toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <div class="post-content">${post.content}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Failed to load posts:', error);
+            }
+        }
+        
+        // Add new post
+        async function addPost() {
+            const content = document.getElementById('new-post').value;
+            const token = localStorage.getItem('token');
+            
+            if (!content.trim()) return;
+            
+            try {
+                const response = await fetch('/posts', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('new-post').value = '';
+                    loadPosts();
+                }
+            } catch (error) {
+                console.error('Failed to add post:', error);
+            }
+        }
+    </script>
+</body>
+</html>
