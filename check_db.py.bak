@@ -1,0 +1,11 @@
+from app import create_app, db
+from app.models import User, Post
+
+app = create_app()
+
+with app.app_context():
+    print("\n📊 DATABASE STATUS:")
+    print(f"User table exists: {User.__table__.exists(db.engine)}")
+    print(f"Post table exists: {Post.__table__.exists(db.engine)}")
+    print(f"Total users: {User.query.count()}")
+    print(f"Total posts: {Post.query.count()}\n")

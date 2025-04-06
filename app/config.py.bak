@@ -1,10 +1,8 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY') or 'your-secret-key-here'
-    # SQLite configuration
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///social_media.db'  # Creates a file `social_media.db`
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disables modification tracking (lowers overhead)
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-123'  # Change this in production!
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///social_media.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASK_ADMIN_SWATCH = 'cerulean'  # Admin theme
+    ADMIN_CREDENTIALS = {'username': 'admin', 'password': 'securepassword'}
