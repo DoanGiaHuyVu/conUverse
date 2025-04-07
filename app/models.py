@@ -1,71 +1,46 @@
-from app import mysql
+import uuid
+from datetime import datetime, timedelta
+import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
 
-def init_db():
-    """Initialize database tables"""
-    cur = mysql.connection.cursor()
+class User(db.Model):
+    __tablename__ = 'user'  # Explicit table name
+
+    id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(50), unique=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(128))
+    name = db.Column(db.String(100))
+    posts = db.relationship('Post', backref='author', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Users table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) UNIQUE NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(128) NOT NULL,
-        name VARCHAR(100),
-        bio TEXT,
-        profile_pic VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """)
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+        
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+        
+    def generate_token(self, expires_in=3600):
+        return jwt.encode(
+            {'public_id': self.public_id, 'exp': datetime.utcnow() + timedelta(seconds=expires_in)},
+            'your-secret-key',  # Change this to a secure secret
+            algorithm='HS256'
+        )
     
-    # Posts table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS posts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        content TEXT NOT NULL,
-        image_url VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    )
-    """)
-    
-    # Followers table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS followers (
-        follower_id INT NOT NULL,
-        followed_id INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (follower_id, followed_id),
-        FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (followed_id) REFERENCES users(id) ON DELETE CASCADE
-    )
-    """)
-    
-    # Likes table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS likes (
-        user_id INT NOT NULL,
-        post_id INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (user_id, post_id),
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-    )
-    """)
-    
-    # Comments table
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS comments (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        post_id INT NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-    )
-    """)
-    
-    mysql.connection.commit()
-    cur.close()
+    @staticmethod
+    def decode_token(token):
+        try:
+            data = jwt.decode(token, 'your-secret-key', algorithms=['HS256'])
+            return data['public_id']
+        except:
+            return None
+
+class Post(db.Model):
+    __tablename__ = 'post'
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
