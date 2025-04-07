@@ -1,12 +1,8 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()  # Load environment variables from .env file
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY') or 'your-secret-key-here'
-    MYSQL_HOST = os.getenv('MYSQL_HOST')
-    MYSQL_USER = os.getenv('MYSQL_USER')
-    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
-    MYSQL_DB = os.getenv('MYSQL_DB')
-    MYSQL_CURSORCLASS = 'DictCursor'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-123'  # Change this in production!
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///social_media.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASK_ADMIN_SWATCH = 'cerulean'  # Admin theme
+    ADMIN_CREDENTIALS = {'username': 'admin', 'password': 'securepassword'}

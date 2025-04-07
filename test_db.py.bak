@@ -1,0 +1,128 @@
+import sys
+from datetime import datetime, timedelta
+from faker import Faker
+from app import create_app, db
+from app.models import User, Post, Comment, Like, Follower
+
+app = create_app()
+fake = Faker()
+
+def generate_test_data():
+    with app.app_context():
+        # Clear existing data
+        db.drop_all()
+        db.create_all()
+        print("✅ Database tables created")
+
+        # Create 10 test users
+        users = []
+        for i in range(1, 11):
+            user = User(
+                username=f"user_{i}",
+                email=f"user{i}@example.com",
+                name=fake.name(),
+                bio=fake.sentence(),
+                profile_pic=fake.image_url(),
+                created_at=datetime.utcnow() - timedelta(days=10-i)
+            )
+            user.set_password("password123")
+            users.append(user)
+        
+        db.session.add_all(users)
+        db.session.commit()
+        print(f"✅ Added {len(users)} test users")
+
+        # Create 20 test posts with random authors
+        posts = []
+        for i in range(1, 21):
+            post = Post(
+                user_id=fake.random_element(elements=[u.id for u in users]),
+                content=fake.paragraph(nb_sentences=3),
+                image_url=fake.image_url() if i % 3 == 0 else None,
+                created_at=datetime.utcnow() - timedelta(hours=20-i)
+            )
+            posts.append(post)
+        
+        db.session.add_all(posts)
+        db.session.commit()
+        print(f"✅ Added {len(posts)} test posts")
+
+        # Create 50 random comments
+        for _ in range(50):
+            comment = Comment(
+                user_id=fake.random_element(elements=[u.id for u in users]),
+                post_id=fake.random_element(elements=[p.id for p in posts]),
+                content=fake.sentence(),
+                created_at=datetime.utcnow() - timedelta(minutes=fake.random_int(0, 1000))
+            )
+            db.session.add(comment)
+        db.session.commit()
+        print("✅ Added 50 test comments")
+
+        # Create random likes (each user likes 3-5 random posts)
+        for user in users:
+            posts_to_like = fake.random_elements(
+                elements=posts,
+                length=fake.random_int(3, 5),
+                unique=True
+            )
+            for post in posts_to_like:
+                like = Like(
+                    user_id=user.id,
+                    post_id=post.id,
+                    created_at=datetime.utcnow() - timedelta(minutes=fake.random_int(0, 500))
+                    )
+                db.session.add(like)
+        db.session.commit()
+        print("✅ Added random likes")
+
+        # Create random follow relationships
+        for user in users:
+            users_to_follow = fake.random_elements(
+                elements=[u for u in users if u.id != user.id],
+                length=fake.random_int(1, 4),
+                unique=True
+            )
+            for follow_user in users_to_follow:
+                follow = Follower(
+                    follower_id=user.id,
+                    followed_id=follow_user.id,
+                    created_at=datetime.utcnow() - timedelta(days=fake.random_int(0, 7))
+                    )
+                db.session.add(follow)
+        db.session.commit()
+        print("✅ Added random follow relationships")
+
+        # Display statistics
+        print("\n📊 Database Statistics:")
+        print(f"Users: {User.query.count()}")
+        print(f"Posts: {Post.query.count()}")
+        print(f"Comments: {Comment.query.count()}")
+        print(f"Likes: {Like.query.count()}")
+        print(f"Follow relationships: {Follower.query.count()}")
+
+        # Sample some data for verification
+        print("\n👥 Sample Users:")
+        for user in User.query.limit(3).all():
+            print(f"{user.username} ({user.name}): {user.bio}")
+
+        print("\n📝 Sample Posts:")
+        for post in Post.query.order_by(Post.created_at.desc()).limit(3).all():
+            print(f"Post {post.id} by {post.author.username}: {post.content[:50]}...")
+
+        print("\n💬 Sample Comments:")
+        for comment in Comment.query.order_by(Comment.created_at.desc()).limit(3).all():
+            print(f"On post {comment.post.id} by {comment.user.username}: {comment.content[:50]}...")
+
+        print("\n❤️ Sample Likes:")
+        for like in Like.query.limit(3).all():
+            print(f"User {like.user.username} liked post {like.post.id}")
+
+if __name__ == '__main__':
+    print("🚀 Generating comprehensive test data...")
+    try:
+        generate_test_data()
+        print("\n🎉 Test data generation complete!")
+    except Exception as e:
+        print(f"\n❌ Error generating test data: {e}")
+        db.session.rollback()

@@ -1,17 +1,25 @@
 from flask import Flask
-from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
 
-mysql = MySQL()
+db = SQLAlchemy()
 
-def create_app(config_class=Config):
-    app = Flask(__name__)
-    app.config.from_object(config_class)
+def create_app():
+    app = Flask(__name__, static_folder='../static')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///social.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
-    # Initialize MySQL
-    mysql.init_app(app)
+    db.init_app(app)
     
-    # Register blueprints (routes)
-    from app.routes import main
-    app.register_blueprint(main)
+    # Initialize database within app context
+    with app.app_context():
+        print("🛠️ Creating tables...")
+        db.create_all()
+        print("✅ Tables created")
+        
+        from .test_data import init_test_data
+        init_test_data()
+    
+    from .routes import init_routes
+    init_routes(app)
     
     return app
