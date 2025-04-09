@@ -7,6 +7,7 @@ def create_app():
     app = Flask(__name__, static_folder='../static')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///social.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.secret_key = '5u2wer'  # use a strong random key in production
     
     db.init_app(app)
     

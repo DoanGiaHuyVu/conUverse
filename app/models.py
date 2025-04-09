@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
 class User(db.Model):
-    __tablename__ = 'user'  # Explicit table name
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(50), unique=True)
@@ -13,22 +13,23 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(128))
     name = db.Column(db.String(100))
+    is_logged_in = db.Column(db.Boolean, default=True)  # For dev/demo purposes
     posts = db.relationship('Post', backref='author', lazy=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
-        
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
-        
+
     def generate_token(self, expires_in=3600):
         return jwt.encode(
             {'public_id': self.public_id, 'exp': datetime.utcnow() + timedelta(seconds=expires_in)},
-            'your-secret-key',  # Change this to a secure secret
+            'your-secret-key',
             algorithm='HS256'
         )
-    
+
     @staticmethod
     def decode_token(token):
         try:
@@ -41,6 +42,9 @@ class Post(db.Model):
     __tablename__ = 'post'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    description = db.Column(db.String(300))
+    tags = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

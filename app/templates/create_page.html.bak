@@ -28,7 +28,7 @@
           placeholder="Search with conUverse"
         />
         <a
-          href="notification_page.html"
+          href="/notifications"
           class="btn btn-link text-decoration-none"
         >
           <i class="fas fa-bell" style="color: #912338"></i>
@@ -45,25 +45,25 @@
               <i class="fas fa-graduation-cap"></i> conUverse
             </h5>
             <nav class="nav flex-column">
-              <a class="nav-link" href="home_page.html">
+              <a class="nav-link" href="/home">
                 <i class="fas fa-home"></i>Home
               </a>
-              <a class="nav-link" href="search_page.html">
+              <a class="nav-link" href="/search">
                 <i class="fas fa-search"></i>Search
               </a>
-              <a class="nav-link" href="discover_page.html">
+              <a class="nav-link" href="/discover">
                 <i class="fas fa-compass"></i>Discover
               </a>
-              <a class="nav-link" href="message_page.html">
+              <a class="nav-link" href="/messages">
                 <i class="fas fa-envelope"></i>Messages
               </a>
-              <a class="nav-link" href="notification_page.html">
+              <a class="nav-link" href="/notifications">
                 <i class="fas fa-bell"></i>Notifications
               </a>
-              <a class="nav-link active" href="create_page.html">
+              <a class="nav-link active" href="/create">
                 <i class="fas fa-plus-circle"></i>Create
               </a>
-              <a class="nav-link" href="profile_page.html">
+              <a class="nav-link" href="/profile">
                 <i class="fas fa-user"></i>Profile
               </a>
             </nav>
@@ -344,23 +344,23 @@
 
     <!-- Mobile Navigation (visible on small screens) -->
     <div class="mobile-nav">
-      <a href="home_page.html" class="mobile-nav-item">
+      <a href="/home" class="mobile-nav-item">
         <i class="fas fa-home"></i>
         <span>Home</span>
       </a>
-      <a href="discover_page.html" class="mobile-nav-item">
+      <a href="/discover" class="mobile-nav-item">
         <i class="fas fa-compass"></i>
         <span>Discover</span>
       </a>
-      <a href="create_page.html" class="mobile-nav-item active">
+      <a href="/create" class="mobile-nav-item active">
         <i class="fas fa-plus-circle"></i>
         <span>Create</span>
       </a>
-      <a href="message_page.html" class="mobile-nav-item">
+      <a href="/messages" class="mobile-nav-item">
         <i class="fas fa-envelope"></i>
         <span>Messages</span>
       </a>
-      <a href="profile_page.html" class="mobile-nav-item">
+      <a href="/profile" class="mobile-nav-item">
         <i class="fas fa-user"></i>
         <span>Profile</span>
       </a>
