@@ -16,6 +16,30 @@
     />
     <link rel="stylesheet" href="/static/css/home_page.css" />
   </head>
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+	  fetch('/posts')
+		.then(res => res.json())
+		.then(posts => {
+		  const feed = document.getElementById('post-feed');
+		  const template = feed.querySelector('.post-template');
+
+		  posts.forEach(post => {
+			const clone = template.cloneNode(true);
+			clone.classList.remove('post-template');
+			clone.style.display = '';
+
+			clone.querySelector('.post-username').textContent = post.author.username;
+			clone.querySelector('.post-time').textContent = new Date(post.created_at).toLocaleString();
+			clone.querySelector('.post-content').textContent = post.content;
+
+			feed.appendChild(clone);
+		  });
+		})
+		.catch(err => console.error("Failed to load posts:", err));
+	});
+	</script>
+
   <body>
     <!-- Mobile Search Bar (visible on small screens) -->
     <div class="mobile-search">
@@ -49,25 +73,25 @@
               </a>
             </h5>
             <nav class="nav flex-column">
-              <a class="nav-link active" href="home_page.html">
+              <a class="nav-link active" href="/home">
                 <i class="fas fa-home"></i> Home
               </a>
-              <a class="nav-link" href="search_page.html">
+              <a class="nav-link" href="/search">
                 <i class="fas fa-search"></i> Search
               </a>
-              <a class="nav-link" href="discover_page.html">
+              <a class="nav-link" href="/discover">
                 <i class="fas fa-compass"></i> Discover
               </a>
-              <a class="nav-link" href="message_page.html">
+              <a class="nav-link" href="/messages">
                 <i class="fas fa-envelope"></i> Messages
               </a>
-              <a class="nav-link" href="notification_page.html">
+              <a class="nav-link" href="/notifications">
                 <i class="fas fa-bell"></i> Notifications
               </a>
-              <a class="nav-link" href="create_page.html">
+              <a class="nav-link" href="/create">
                 <i class="fas fa-plus-circle"></i> Create
               </a>
-              <a class="nav-link" href="profile_page.html">
+              <a class="nav-link" href="/profile">
                 <i class="fas fa-user"></i> Profile
               </a>
             </nav>
@@ -75,7 +99,7 @@
         </div>
 
         <!-- Main Content Area -->
-        <div class="col-md-6 col-lg-6 content-area">
+        <div class="col-md-6 col-lg-6 content-area" id="post-feed">
           <!-- Post 1 -->
           <div class="post-card">
             <div class="post-header">
@@ -107,6 +131,34 @@
               </div>
             </div>
           </div>
+		  
+		  <!-- Post Temp -->
+		  <div class="post-card post-template" style="display: none;">
+			<div class="post-header">
+			  <div class="post-avatar">
+				<i class="fas fa-user"></i>
+			  </div>
+			  <div class="post-user-info">
+				<div class="post-username"></div>
+				<div class="post-time">Just now</div>
+			  </div>
+			</div>
+			<div class="post-content"></div>
+			<div class="post-actions">
+			  <div class="post-action">
+				<i class="far fa-heart"></i>
+				<span>0</span>
+			  </div>
+			  <div class="post-action">
+				<i class="far fa-comment"></i>
+				<span>0</span>
+			  </div>
+			  <div class="post-action">
+				<i class="fas fa-share"></i>
+				<span>Share</span>
+			  </div>
+			</div>
+		  </div>
 
           <!-- Event Card -->
           <div class="event-card">
@@ -319,23 +371,23 @@
 
     <!-- Mobile Navigation (visible on small screens) -->
     <div class="mobile-nav">
-      <a href="home_page.html" class="mobile-nav-item active">
+      <a href="/home" class="mobile-nav-item active">
         <i class="fas fa-home"></i>
         <span>Home</span>
       </a>
-      <a href="discover_page.html" class="mobile-nav-item">
+      <a href="/discover" class="mobile-nav-item">
         <i class="fas fa-compass"></i>
         <span>Discover</span>
       </a>
-      <a href="create_page.html" class="mobile-nav-item">
+      <a href="/create" class="mobile-nav-item">
         <i class="fas fa-plus-circle"></i>
         <span>Create</span>
       </a>
-      <a href="message_page.html" class="mobile-nav-item">
+      <a href="/messages" class="mobile-nav-item">
         <i class="fas fa-envelope"></i>
         <span>Messages</span>
       </a>
-      <a href="profile_page.html" class="mobile-nav-item">
+      <a href="/profile" class="mobile-nav-item">
         <i class="fas fa-user"></i>
         <span>Profile</span>
       </a>

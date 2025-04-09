@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>conUverse - Notifications</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/home_page.css" />
+    <style>
+      .notification-controls .input-group,
+      .notification-controls .form-select,
+      .notification-controls .btn {
+        height: 38px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+      .notification-controls .input-group {
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .notification-controls .input-group .btn {
+        border-left: 0;
+        background-color: white;
+      }
+      .notification-controls .input-group .form-control {
+        border-right: 0;
+        box-shadow: none;
+      }
+      .notification-controls .input-group .form-control:focus,
+      .notification-controls .form-select:focus,
+      .notification-controls .btn:focus {
+        box-shadow: 0 0 0 0.2rem rgba(145, 35, 56, 0.25);
+        border-color: #912338;
+      }
+      .notification-controls .btn {
+        border: 1px solid #dee2e6;
+        color: #495057;
+        background-color: white;
+      }
+      .notification-controls .btn:hover {
+        background-color: #f8f9fa;
+        border-color: #912338;
+        color: #912338;
+      }
+      .notification-controls .form-select {
+        border: 1px solid #dee2e6;
+        cursor: pointer;
+      }
+      .notification-controls .form-select:hover {
+        border-color: #912338;
+      }
+      .notification-controls .dropdown-menu {
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      }
+      .notification-controls .dropdown-item:hover {
+        background-color: #f8f9fa;
+      }
+      .notification-controls .form-check-input:checked {
+        background-color: #912338;
+        border-color: #912338;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Search Bar (visible on small screens) -->
+    <div class="mobile-search">
+      <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="fas fa-search text-muted"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-start-0"
+          placeholder="Search with conUverse"
+        />
+        <a href="#" class="btn btn-link text-decoration-none">
+          <i class="fas fa-bell" style="color: #912338"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <!-- Left Navigation Sidebar (hidden on mobile) -->
+        <div class="col-md-3 col-lg-2 desktop-nav">
+          <div class="sidebar sticky-top" style="top: 20px">
+            <h5 class="navbar-brand mb-4">
+              <a
+                href="about_page.html"
+                class="text-decoration-none"
+                style="color: #912338"
+              >
+                <i class="fas fa-graduation-cap"></i> conUverse
+              </a>
+            </h5>
+            <nav class="nav flex-column">
+              <a class="nav-link" href="/home">
+                <i class="fas fa-home"></i> Home
+              </a>
+              <a class="nav-link" href="/search">
+                <i class="fas fa-search"></i> Search
+              </a>
+              <a class="nav-link" href="/discover">
+                <i class="fas fa-compass"></i> Discover
+              </a>
+              <a class="nav-link" href="/messages">
+                <i class="fas fa-envelope"></i> Messages
+              </a>
+              <a class="nav-link active" href="/notifications">
+                <i class="fas fa-bell"></i> Notifications
+              </a>
+              <a class="nav-link" href="/create">
+                <i class="fas fa-plus-circle"></i> Create
+              </a>
+              <a class="nav-link" href="/profile">
+                <i class="fas fa-user"></i> Profile
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-6 col-lg-7 content-area">
+          <h4 class="mb-4">Notifications</h4>
+
+          <!-- Notification Control Panel -->
+          <div class="notification-controls mb-4 p-3 bg-light rounded">
+            <div class="row align-items-center">
+              <!-- Search Bar -->
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search notifications..."
+                  />
+                  <button class="btn btn-outline-secondary" type="button">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Sort Dropdown -->
+              <div class="col-md-3">
+                <select class="form-select">
+                  <option selected>Sort by...</option>
+                  <option value="date_new">Newest First</option>
+                  <option value="date_old">Oldest First</option>
+                  <option value="type">By Type</option>
+                  <option value="importance">By Importance</option>
+                </select>
+              </div>
+
+              <!-- Archive Button -->
+              <div class="col-md-2" style="width: auto">
+                <button class="btn btn-outline-secondary w-100">
+                  <i class="fas fa-archive"></i> Archive
+                </button>
+              </div>
+
+              <!-- Settings Dropdown -->
+              <div class="col-md-3">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-outline-secondary w-100 dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    <i class="fas fa-cog"></i> Settings
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <div class="dropdown-item">
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="pushNotif"
+                            checked
+                          />
+                          <label class="form-check-label" for="pushNotif"
+                            >Push Notifications</label
+                          >
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dropdown-item">
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="emailNotif"
+                          />
+                          <label class="form-check-label" for="emailNotif"
+                            >Email Notifications</label
+                          >
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dropdown-item">
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="soundNotif"
+                            checked
+                          />
+                          <label class="form-check-label" for="soundNotif"
+                            >Notification Sound</label
+                          >
+                        </div>
+                      </div>
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                      <a class="dropdown-item" href="#">Advanced Settings</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Like Notification -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="post-user-info">
+                <div class="post-username">
+                  Emily Davis <span class="text-muted">liked your post</span>
+                </div>
+                <div class="post-time">5 minutes ago</div>
+              </div>
+            </div>
+            <div class="post-content text-muted">
+              "Looking for study partners for COMP 352 final exam!"
+            </div>
+          </div>
+
+          <!-- Comment Notification -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="post-user-info">
+                <div class="post-username">
+                  Alex Wong
+                  <span class="text-muted">commented on your post</span>
+                </div>
+                <div class="post-time">15 minutes ago</div>
+              </div>
+            </div>
+            <div class="post-content">
+              "I'm interested! What time are you thinking of meeting?"
+            </div>
+          </div>
+
+          <!-- Event Reminder Notification -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-avatar">
+                <i class="fas fa-calendar-alt" style="color: #912338"></i>
+              </div>
+              <div class="post-user-info">
+                <div class="post-username">Event Reminder</div>
+                <div class="post-time">1 hour ago</div>
+              </div>
+            </div>
+            <div class="post-content">
+              <strong>Concordia Engineering Showcase</strong> starts in 2 days.
+              <div class="mt-2">
+                <button
+                  class="btn btn-sm btn-primary"
+                  style="background-color: #912338; border-color: #912338"
+                >
+                  View Event
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mention Notification -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="post-user-info">
+                <div class="post-username">
+                  David Kim
+                  <span class="text-muted">mentioned you in a comment</span>
+                </div>
+                <div class="post-time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="post-content">
+              "@Sarah Hey, would you be interested in joining our study group?"
+            </div>
+          </div>
+
+          <!-- New Follower Notification -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="post-user-info">
+                <div class="post-username">
+                  Maria Garcia
+                  <span class="text-muted">started following you</span>
+                </div>
+                <div class="post-time">3 hours ago</div>
+              </div>
+            </div>
+            <div class="post-content">
+              <button class="btn btn-sm btn-outline-secondary">
+                Follow Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
