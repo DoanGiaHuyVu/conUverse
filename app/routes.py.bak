@@ -1,4 +1,4 @@
-from flask import jsonify, request, make_response
+from flask import jsonify, request, make_response, session, redirect, url_for, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from .models import User, Post
@@ -8,49 +8,56 @@ from functools import wraps
 
 def init_routes(app):
     # ========================
+    # Login Required Decorator
+    # ========================
+    def login_required(view_func):
+        @wraps(view_func)
+        def wrapper(*args, **kwargs):
+            if 'username' not in session:
+                return redirect('/login')
+            return view_func(*args, **kwargs)
+        return wrapper
+
+    # ========================
     # Authentication Routes
     # ========================
-    
-    @app.route('/register', methods=['POST'])
-    def register():
-        data = request.get_json()
-        if User.query.filter_by(email=data['email']).first():
-            return jsonify({'success': False, 'error': 'Email already exists'}), 400
-            
-        user = User(
-            email=data['email'],
-            username=data['username'],
-            password=data['password']  # In production, you should hash this
-        )
-        db.session.add(user)
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'user_id': user.id,
-            'username': user.username
-        })
 
-    @app.route('/login', methods=['POST'])
-    def login():
-        data = request.get_json()
-        user = User.query.filter_by(
-            email=data['email'],
-            password=data['password']  # Plaintext comparison for prototype
-        ).first()
-        
-        if user:
+    @app.route('/login', methods=['GET', 'POST'])
+    def login_page():
+        if request.method == 'GET':
+            return display_html('login.html')
+
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+            if not user.is_logged_in:
+                return "User is not authorized to log in", 403
+
+            session['username'] = user.username
+            session['user_id'] = user.id
+            session['public_id'] = user.public_id
+            session['name'] = user.name
+            return redirect(url_for('home_page'))
+
+        return redirect('/login')
+
+    @app.route('/logout')
+    def logout():
+        session.clear()
+        return redirect(url_for('login_page'))
+
+    @app.route('/whoami')
+    def whoami():
+        if 'username' in session:
             return jsonify({
-                'success': True,
-                'user_id': user.id,
-                'username': user.username
+                'username': session['username'],
+                'public_id': session['public_id'],
+                'name': session['name']
             })
-    return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
+        return jsonify({'error': 'Not logged in'}), 401
 
-    # ========================
-    # User Routes
-    # ========================
-    
     @app.route('/users', methods=['GET'])
     def get_all_users():
         users = User.query.all()
@@ -64,10 +71,9 @@ def init_routes(app):
     @app.route('/users/<public_id>', methods=['GET'])
     def get_one_user(public_id):
         user = User.query.filter_by(public_id=public_id).first()
-        
         if not user:
             return jsonify({'error': 'User not found'}), 404
-            
+
         return jsonify({
             'public_id': user.public_id,
             'username': user.username,
@@ -76,15 +82,14 @@ def init_routes(app):
             'posts_count': len(user.posts)
         })
 
-    # ========================
-    # Post Routes (Updated)
-    # ========================
-    
     @app.route('/posts', methods=['GET'])
     def get_posts():
         posts = Post.query.order_by(Post.created_at.desc()).all()
         return jsonify([{
             'id': p.id,
+            'title': p.title,
+            'description': p.description,
+            'tags': p.tags,
             'content': p.content,
             'author': {
                 'username': p.author.username,
@@ -93,37 +98,85 @@ def init_routes(app):
             'created_at': p.created_at.isoformat()
         } for p in posts])
 
-    @app.route('/posts', methods=['POST'])
-    def add_post():
+    @app.route('/create_post', methods=['POST'])
+    def create_post():
         data = request.get_json()
-        user = User.query.get(data['user_id'])
-        
+        user = User.query.filter_by(public_id=data.get('public_id')).first()
         if not user:
             return jsonify({'error': 'User not found'}), 404
-            
-        post = Post(content=data['content'], author=user)
+
+        post = Post(
+            title=data.get('title'),
+            content=data.get('content'),
+            description=data.get('description'),
+            tags=data.get('tags'),
+            author=user
+        )
         db.session.add(post)
         db.session.commit()
-        
-        return jsonify({'id': post.id}), 201
+        return jsonify({
+            'success': True,
+            'post': {
+                'id': post.id,
+                'title': post.title,
+                'description': post.description,
+                'tags': post.tags,
+                'content': post.content,
+                'author': user.username
+            }
+        }), 201
 
     # ========================
-    # Root Route
+    # Page Routes (Protected)
     # ========================
-    
     @app.route('/')
-    def home():
-        return app.send_static_file('index.html')
+    def default_redirect():
+        return redirect('/home')
 
-    # Helper function for token verification
+    @app.route('/home')
+    @login_required
+    def home_page():
+        return display_html('home_page.html')
+
+    @app.route('/profile')
+    @login_required
+    def profile_page():
+        return display_html('profile_page.html')
+
+    @app.route('/create')
+    @login_required
+    def create_page():
+        return display_html('create_page.html')
+
+    @app.route('/search')
+    @login_required
+    def search_page():
+        return display_html('search_page.html')
+
+    @app.route('/discover')
+    @login_required
+    def discover_page():
+        return display_html('discover_page.html')
+
+    @app.route('/messages')
+    @login_required
+    def message_page():
+        return display_html('message_page.html')
+
+    @app.route('/notifications')
+    @login_required
+    def notification_page():
+        return display_html('notification_page.html')
+
+    def display_html(filename):
+        return app.send_static_file(filename)
+
     def verify_token(token):
         if not token:
             return None
-            
         try:
-            # Extract token from "Bearer <token>"
             token = token.split(' ')[1]
-            public_id = User.decode_token(token)  # Implement this in User model
+            public_id = User.decode_token(token)
             return User.query.filter_by(public_id=public_id).first()
         except:
             return None
