@@ -118,8 +118,165 @@
               </div>
             </div>
 
-            <!-- Tabs (Photos, Courses, Events) -->
-            <!-- ... Keep your tab layout unchanged ... -->
+            <!-- Profile Tabs Navigation -->
+            <div class="profile-tabs">
+                <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="photos-tab" data-bs-toggle="tab" data-bs-target="#photos" type="button" role="tab" aria-controls="photos" aria-selected="true">
+                            <i class="fas fa-th"></i> Photos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">
+                            <i class="fas fa-book"></i> Courses
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab" aria-controls="events" aria-selected="false">
+                            <i class="fas fa-calendar"></i> Saved Events
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="profileTabsContent">
+                    <!-- Photos Tab -->
+                    <div class="tab-pane fade show active" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                        <div class="photos-grid">
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 42</span>
+                                        <span><i class="fas fa-comment"></i> 5</span>
+                                        <span><i class="fas fa-share"></i> 2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 28</span>
+                                        <span><i class="fas fa-comment"></i> 3</span>
+                                        <span><i class="fas fa-share"></i> 1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 56</span>
+                                        <span><i class="fas fa-comment"></i> 8</span>
+                                        <span><i class="fas fa-share"></i> 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 19</span>
+                                        <span><i class="fas fa-comment"></i> 2</span>
+                                        <span><i class="fas fa-share"></i> 0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 33</span>
+                                        <span><i class="fas fa-comment"></i> 4</span>
+                                        <span><i class="fas fa-share"></i> 1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://via.placeholder.com/300" alt="Posted photo">
+                                <div class="photo-overlay">
+                                    <div class="engagement-stats">
+                                        <span><i class="fas fa-heart"></i> 47</span>
+                                        <span><i class="fas fa-comment"></i> 6</span>
+                                        <span><i class="fas fa-share"></i> 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Courses Tab -->
+                    <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                        <div class="courses-section">
+                            <h3 class="section-subtitle">Current Courses</h3>
+                            <div class="courses-grid">
+                                <div class="course-item">COMP 233</div>
+                                <div class="course-item">COMP 248</div>
+                                <div class="course-item">COMP 352</div>
+                                <div class="course-item">SOEN 287</div>
+                                <div class="course-item">ENCS 282</div>
+                            </div>
+                            
+                            <h3 class="section-subtitle mt-4">Past Courses</h3>
+                            <div class="courses-grid">
+                                <div class="course-item past-course">COMP 232</div>
+                                <div class="course-item past-course">COMP 249</div>
+                                <div class="course-item past-course">MATH 203</div>
+                                <div class="course-item past-course">MATH 204</div>
+                                <div class="course-item past-course">MATH 205</div>
+                                <div class="course-item past-course">ENCS 272</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Events Tab -->
+                    <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">MAR</div>
+                                    <div class="event-day">15</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Computer Science Society Meetup</h3>
+                                    <p>Hall Building, H-110 @ 5:30 PM</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">MAR</div>
+                                    <div class="event-day">20</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Hackathon 2024</h3>
+                                    <p>EV Building @ 9:00 AM</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">APR</div>
+                                    <div class="event-day">05</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>Career Fair</h3>
+                                    <p>John Molson Building @ 10:00 AM</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-month">APR</div>
+                                    <div class="event-day">12</div>
+                                </div>
+                                <div class="event-info">
+                                    <h3>AI Workshop</h3>
+                                    <p>EV Building, EV3.309 @ 2:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
         </div>
 
