@@ -152,6 +152,11 @@ def init_routes(app):
     @login_required
     def search_page():
         return display_html('search_page.html')
+        
+    @app.route('/settings')
+    @login_required
+    def setting_page():
+        return display_html('setting_page.html')
 
     @app.route('/discover')
     @login_required
