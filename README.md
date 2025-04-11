@@ -31,7 +31,9 @@ ConUverse allows students to interact with their peers, join events and study gr
 
 ## Usage
 1. Open your browser and navigate to `http://localhost:5000`.
-2. log in with the test account: Email: sm_jos@live.concordia.ca password: password123.
+2. Log in with the test account: 
+**Email**: sm_jos@live.concordia.ca 
+**Password**: password123
 3. Once logged in, you'll be redirected to the home page where you can explore your profile, study groups, events, and post feeds.
 4. To create a post, enter text and click the Post button.
 
