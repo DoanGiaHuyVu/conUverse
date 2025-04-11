@@ -65,7 +65,7 @@
           class="form-control border-start-0"
           placeholder="Search with conUverse"
         />
-        <a href="/notifications" class="btn btn-link text-decoration-none">
+        <a href="notifications.html" class="btn btn-link text-decoration-none">
           <i class="fas fa-bell" style="color: #912338;"></i>
         </a>
       </div>

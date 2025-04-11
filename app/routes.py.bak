@@ -152,6 +152,11 @@ def init_routes(app):
     @login_required
     def search_page():
         return display_html('search_page.html')
+        
+    @app.route('/settings')
+    @login_required
+    def search_page():
+        return display_html('setting_page.html')
 
     @app.route('/discover')
     @login_required
@@ -169,7 +174,7 @@ def init_routes(app):
         return display_html('notification_page.html')
 
     def display_html(filename):
-        return app.send_static_file(filename)
+        return render_template(filename)
 
     def verify_token(token):
         if not token:
